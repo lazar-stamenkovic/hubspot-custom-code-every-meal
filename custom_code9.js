@@ -55,26 +55,14 @@ exports.main = async (event, callback) => {
       "q": `SELECT * FROM transaction where custbodyem_deal_transaction_id=${dealId}`
     })
   };
-  try {
-    const tranId = await new Promise((resolve, reject) => {
-      request(options, function (error, response) {
-        if (error) {
-          return reject(error);
-        }
-        const res = JSON.parse(response.body);
-        if (!res || !res.items || !res.items.length || !res.items[0].tranid) {
-          return reject(`failed to get tran id - ${JSON.stringify(res)}`)
-        }
-        resolve(res.items[0].tranid)
-      });
-    });
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    const res = JSON.parse(response.body);
+    const tranId=res.items[0].tranid
     callback({
-      outputFields: {
-        TransactionId: tranId
-      }
-    });
-  } catch(e) {
-    console.error(e);
-    throw e;
-  }
+        outputFields: {
+          TransactionId: tranId
+        }
+      });
+  });
 };

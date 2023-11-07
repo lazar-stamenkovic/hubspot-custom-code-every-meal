@@ -89,8 +89,16 @@ exports.main = async (event) => {
       }
     })
   };
-  request(options, function (error, response) {
-    if (error) throw new Error(error);
-    console.log(response.body);
-  });
+  try {
+    await new Promise((resolve, reject) => {
+      request(options, function (error, response) {
+        if (error) reject(error);
+        console.log(response.body);
+        resolve(response.body);
+      });
+    });
+  } catch(e) {
+    console.error(e);
+    throw e;
+  }
 };
