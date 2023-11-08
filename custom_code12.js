@@ -43,7 +43,7 @@ exports.main = async (event, callback) => {
   const AuthorizationHeader = `OAuth realm="${Realm}",oauth_consumer_key="${ConsumerKey}",oauth_token="${TokenID}",oauth_signature_method="HMAC-SHA256",oauth_timestamp="${TimeStamp}",oauth_nonce="${Nonce}",oauth_version="1.0",oauth_signature="${SignatureEncoded}"`;
   console.log(AuthorizationHeader)
 
-    var options = {
+  var options = {
     'method': 'POST',
     'url': 'https://4147491.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql',
     'headers': {
